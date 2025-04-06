@@ -10,7 +10,7 @@ const BookList = () => {
       {!books.length && <h3>The Books Library is empty</h3>}
       <ul>
         {books.map((book, ind) => (
-          <li key={ind}>
+          <li key={book.id}>
             <div className="book-info">
               {++ind} {book.title} by <strong>{book.author}</strong>
             </div>
