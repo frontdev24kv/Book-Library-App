@@ -12,3 +12,9 @@ export const deleteBook = (bookId) => {
     payload: bookId
   }
 }
+export const toggleFavoriteBook = (bookId) => {
+  return {
+    type: a.TOGGLE_FAVORITE_BOOK,
+    payload: bookId
+  }
+}

@@ -17,7 +17,8 @@ const BookForm = () => {
         addBook({
           title,
           author,
-          id: uuidv4()
+          id: uuidv4(),
+          isFavorite: false
         })
       );
     } else {
@@ -33,7 +34,8 @@ const BookForm = () => {
       addBook({
         title: randomBook.title,
         author: randomBook.author,
-        id: uuidv4()
+        id: uuidv4(),
+        isFavorite: false
       })
     );
   };
