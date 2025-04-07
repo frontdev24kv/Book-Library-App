@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
+import { createBookWithId } from '../../utils/createBookWithId';
 import { addBook } from '../../redux/books/actionCreators';
 import './BookForm.css';
 import booksData from '../../data/books.json';
@@ -13,14 +13,7 @@ const BookForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title.trim() && author.trim()) {
-      dispatch(
-        addBook({
-          title,
-          author,
-          id: uuidv4(),
-          isFavorite: false
-        })
-      );
+      dispatch(addBook(createBookWithId({ title, author })));
     } else {
       alert('All the fields must be fill in');
     }
@@ -30,14 +23,7 @@ const BookForm = () => {
 
   const addRandomBookHandler = () => {
     const randomBook = booksData[Math.floor(Math.random() * booksData.length)];
-    dispatch(
-      addBook({
-        title: randomBook.title,
-        author: randomBook.author,
-        id: uuidv4(),
-        isFavorite: false
-      })
-    );
+    dispatch(addBook(createBookWithId(randomBook)));
   };
 
   return (
