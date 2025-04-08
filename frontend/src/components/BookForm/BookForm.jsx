@@ -24,29 +24,14 @@ const BookForm = () => {
 
   const addRandomBookHandler = () => {
     const randomBook = booksData[Math.floor(Math.random() * booksData.length)];
-    dispatch(addBook(createBookWithId(randomBook)));
+    dispatch(addBook(createBookWithId(randomBook, 'random')));
   };
-
-  // const fetchBook = async () => {
-  //   try {
-  //     const apiResponse = await fetch('https://localhost:4000/random-book');
-  //     if (apiResponse.ok) {
-  //       const book = await apiResponse.json();
-  //       console.log('everything ok');
-  //       dispatch(addBook(createBookWithId(book)));
-  //     } else {
-  //       console.log('something went wrong');
-  //     }
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
 
   const addRandomBookByApi = async () => {
     try {
       const res = await axios.get('http://localhost:4000/random-book');
       if (res?.data?.title && res?.data?.author) {
-        dispatch(addBook(createBookWithId(res.data)));
+        dispatch(addBook(createBookWithId(res.data, "API")));
       }
     } catch (error) {
       console.log(error.message);

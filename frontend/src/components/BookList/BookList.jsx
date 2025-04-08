@@ -59,6 +59,7 @@ const BookList = () => {
             <div className="book-info">
               {++ind} {highlightMatch(book.title, filterTitle)} by{' '}
               <strong>{highlightMatch(book.author, filterAuthor)}</strong>
+              <i> ({book.source})</i>
             </div>
             <div className="book-actions">
               <span onClick={() => toggleFavoriteHandler(book.id)}>
