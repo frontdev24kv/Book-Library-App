@@ -5,15 +5,18 @@ import { setError } from './errorSlice';
 
 const initialState = [];
 
-export const fetchBook = createAsyncThunk('books/fetchBook', async (url, thuncAPI) => {
-  try {
-    const res = await axios.get(url);
-    return res.data;
-  } catch (error) {    
-    thuncAPI.dispatch(setError(error.message))
-    throw error
+export const fetchBook = createAsyncThunk(
+  'books/fetchBook',
+  async (url, thuncAPI) => {
+    try {
+      const res = await axios.get(url);
+      return res.data;
+    } catch (error) {
+      thuncAPI.dispatch(setError(error.message));
+      throw error;
+    }
   }
-});
+);
 
 const booksSlice = createSlice({
   name: 'books',
@@ -30,6 +33,7 @@ const booksSlice = createSlice({
       });
     }
   },
+
   extraReducers: (builder) => {
     builder.addCase(fetchBook.fulfilled, (state, action) => {
       const { payload } = action;

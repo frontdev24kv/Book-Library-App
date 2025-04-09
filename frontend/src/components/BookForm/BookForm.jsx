@@ -3,12 +3,15 @@ import { useDispatch } from 'react-redux';
 import { createBookWithId } from '../../utils/createBookWithId';
 import { addBook, fetchBook } from '../../redux/slices/booksSlice';
 import { setError } from '../../redux/slices/errorSlice';
+import { FaSpinner } from 'react-icons/fa6';
 import './BookForm.css';
 import booksData from '../../data/books.json';
 
 const BookForm = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -16,7 +19,7 @@ const BookForm = () => {
     if (title.trim() && author.trim()) {
       dispatch(addBook(createBookWithId({ title, author })));
     } else {
-      dispatch(setError('All the fields must be fill in'))
+      dispatch(setError('All the fields must be fill in'));
     }
     setTitle('');
     setAuthor('');
@@ -27,8 +30,13 @@ const BookForm = () => {
     dispatch(addBook(createBookWithId(randomBook, 'random')));
   };
 
-  const addRandomBookByApi = () => {
-    dispatch(fetchBook('http://localhost:4000/random-book'))
+  const addRandomBookByApi = async () => {
+    try {
+      setIsLoading(true);
+      await dispatch(fetchBook('http://localhost:4000/random-book-delayed'));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -57,8 +65,15 @@ const BookForm = () => {
         <button type="button" onClick={addRandomBookHandler}>
           Add random
         </button>
-        <button type="button" onClick={addRandomBookByApi}>
-          Add random via API
+        <button type="button" onClick={addRandomBookByApi} disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <span>Book is loading...</span>
+              <FaSpinner className="spinner" />
+            </>
+          ) : (
+            'Add random via API'
+          )}
         </button>
       </form>
     </div>
