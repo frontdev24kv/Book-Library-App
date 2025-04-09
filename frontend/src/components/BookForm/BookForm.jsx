@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBookWithId } from '../../utils/createBookWithId';
 import { addBook, fetchBook } from '../../redux/slices/booksSlice';
+import { setError } from '../../redux/slices/errorSlice';
 import './BookForm.css';
 import booksData from '../../data/books.json';
 
@@ -15,7 +16,7 @@ const BookForm = () => {
     if (title.trim() && author.trim()) {
       dispatch(addBook(createBookWithId({ title, author })));
     } else {
-      alert('All the fields must be fill in');
+      dispatch(setError('All the fields must be fill in'))
     }
     setTitle('');
     setAuthor('');
